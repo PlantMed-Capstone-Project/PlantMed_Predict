@@ -1,0 +1,15 @@
+py -m venv venv
+.\venv\Scripts\activate
+py -m pip install --upgrade pip
+pip install fastapi
+pip install pydantic
+pip install uvicorn
+pip install pyodbc
+pip install python-multipart
+pip install opencv-python
+pip install pillow
+pip install tensorflow
+pip install joblib
+pip install scikit-learn==1.2.2
+uvicorn app.main:app --reload
+pip freeze > requirements.txt
