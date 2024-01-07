@@ -2,11 +2,12 @@
 This file is to test Cyclic's hosting capabilities
 """
 
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from uuid import uuid4
 import io
+import uvicorn
 
 app = FastAPI()
 origins = ["*"]
@@ -26,13 +27,13 @@ def root():
     return {"status": "OK", "message": "Hello World in AI PlantMed"}
 
 
-@app.post("/upload")
+@app.post("/upload", tags=["Predict"])
 async def upload_image(file: UploadFile = File(...)):
     file.filename = f"{uuid4()}.jpg"
     contents = await file.read()
 
-    data = StreamingResponse(io.BytesIO(contents), media_type="image/jpeg")
-    if data is not None:
-        return data
-    else:
-        raise HTTPException(status_code=400, detail="The request is not an image")
+    return StreamingResponse(io.BytesIO(contents), media_type="image/jpeg")
+
+
+if __name__ == "__main__":
+    uvicorn.run("app:app", port=5000, log_level="info")
