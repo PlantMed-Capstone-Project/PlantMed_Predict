@@ -9,8 +9,11 @@ pip install python-multipart
 pip install uuid
 pip install opencv-python
 pip install pillow
+pip install ultralytics
+uvicorn main:app --reload
+pip freeze > requirements.txt
+
+# Optionals
 pip install torch
 pip install joblib
 pip install scikit-learn==1.2.2
-uvicorn main:app --reload
-pip freeze > requirements.txt
